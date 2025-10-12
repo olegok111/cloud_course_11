@@ -1,0 +1,36 @@
+#cloud-config
+users:
+  - name: okoyomovov
+    ssh_authorized_keys:
+      - SSHPUBKEY
+ssh_pwauth: false
+chpasswd:
+  expire: false
+  users:
+    - name: okoyomovov
+      password: 0000pw
+      type: text
+package_upgrade: true
+packages:
+  - nginx
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx
+write_files:
+  - owner: www-data:www-data
+    path: /etc/nginx/sites-available/default
+    content: |
+      server {
+          listen 80;
+          location / {
+              root /data/www;
+          }
+      }
+  - owner: www-data:www-data
+    path: /data/www/index.html
+    content: |
+      <html>
+      <head><title>Nginx in cloud-init</title></head>
+      <body><p>Nginx is running in VM!</p></body>
+      </html>
+
