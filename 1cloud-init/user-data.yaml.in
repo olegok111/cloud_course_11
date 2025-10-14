@@ -17,8 +17,7 @@ runcmd:
   - systemctl enable nginx
   - systemctl start nginx
 write_files:
-  - owner: www-data:www-data
-    path: /etc/nginx/sites-available/default
+  - path: /etc/nginx/sites-enabled.d/default.conf
     content: |
       server {
           listen 80;
@@ -26,11 +25,9 @@ write_files:
               root /data/www;
           }
       }
-  - owner: www-data:www-data
-    path: /data/www/index.html
+  - path: /data/www/index.html
     content: |
       <html>
       <head><title>Nginx in cloud-init</title></head>
       <body><p>Nginx is running in VM!</p></body>
       </html>
-
