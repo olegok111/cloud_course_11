@@ -1,0 +1,3 @@
+[submodule "2docker-compose"]
+	path = 2docker-compose
+	url = git@github.com:olegok111/MCT-2025-containers.git
