@@ -1,5 +1,5 @@
 [ ! -f id_rsa ] && ssh-keygen -f id_rsa -t rsa
-awk '{ getline key < "id_rsa.pub"; gsub("SSHPUBKEY", key); print > "user-data.yaml" }' user-data.yaml.in
+ssh "s|SSHPUBKEY|`cat id_rsa.pub`|" user-data.yaml.in > user-data.yaml
 cloud-localds cloud-seed.img user-data.yaml meta-data.yaml
 sudo cp cloud-seed.img /var/lib/libvirt/images/
 sudo chown ${USER}:libvirt-qemu /var/lib/libvirt/images/cloud-seed.img
